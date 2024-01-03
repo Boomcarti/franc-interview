@@ -1,20 +1,111 @@
+<!DOCTYPE html>
 <html>
-    <body>
-        <h1>Hello!
-        {% if username %}
-            {{ username }}
-        {% endif %}
-        </h1>
-        {% if not username %}
-            <p>to view a users timeline go to /?username=<b>username</b></p>
-            <p><a href="/?username=Kyle">example</a></p>
-            <p>Posts can be found <a href="/posts">here</a></p>
-            <p>Users and there follows can be found <a href="/users">here</a></p>
-        {% else %}
-            <p>Your tweets:</p>
-            <ul>
-                <li>first tweet</li>
-            </ul>
-        {% endif %}
-    </body>
+<head>
+    <!-- CSS to make it look a bit prettier  -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #50b3a2;
+            color: white;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #e8491d 3px solid;
+        }
+        header a {
+            color: #ffffff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header ul {
+            padding: 0;
+            list-style: none;
+            text-align: center;
+        }
+        header li {
+            display: inline;
+            margin: 0 20px;
+        }
+        header #branding {
+            float: left;
+        }
+        header #branding h1 {
+            margin: 0;
+        }
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        header .highlight, header .current a {
+            color: #e8491d;
+            font-weight: bold;
+        }
+        header a:hover {
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .timeline {
+            background: #e8491d;
+            color: #ffffff;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .post {
+            background: #fff;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Container for all the Heading element s and Nav-->
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">Social Media</span> Challenge</h1>
+            </div>
+            <nav>
+                <ul>
+                    
+                    <li class="current"><a href="/">Home</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Container for the rest of the application -->
+        <section class="timeline">
+            <h1>Hello{% if username %}, {{ username }}{% endif %}</h1>
+            {% if not username %}
+                <p>To view a user's timeline go to /?username=<strong>username</strong></p>
+                <p><a href="/?username=Kyle">Example</a></p>
+                <p>Posts can be found <a href="/posts">here</a></p>
+                <p>Users and their follows can be found <a href="/users">here</a></p>
+            {% else %}
+
+                <p>Your Timeline (in chronological order):</p>
+                {% for post in postlist %}
+                    <div class="post">
+                        <!-- for each post in the postlist post the status and the time it was posted -->
+                        <p>{{ post.status }} - <small>{{ post.time.strftime('%Y-%m-%d %H:%M:%S') }}</small></p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </section>
+    </div>
+
+</body>
 </html>
